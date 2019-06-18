@@ -18,9 +18,11 @@ class CreateAssertionsTable extends Migration
             $table->timestamps();
 
             $table->longText('body');
-            $table->text('provider');
+            $table->text('provider')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
         });
     }
 
