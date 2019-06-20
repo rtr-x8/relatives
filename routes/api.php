@@ -18,4 +18,7 @@ Route::group(['middleware' => ['json.response']], function () {
         return $request->user();
         //Auth::routes();
     });
+
+    Route::post('/register', 'API\AuthController@register')
+        ->name('register.api');
 });
