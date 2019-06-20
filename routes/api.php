@@ -19,7 +19,13 @@ Route::group(['middleware' => ['json.response']], function () {
         //Auth::routes();
     });
 
+    // public
     Route::post('/register', 'API\AuthController@register')
         ->name('register.api');
     Route::post('/login', 'Api\AuthController@login')->name('login.api');
+
+    // private
+    Route::middleware('auth:api')->group(function () {
+        Route::get('/logout', 'Api\AuthController@logout')->name('logout');
+    });
 });
