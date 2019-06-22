@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
+// passport/xxx
 Route::group(['middleware' => ['json.response']], function () {
     Route::middleware('auth:api')->get('/user', function (Request $request) {
         return $request->user();
@@ -24,10 +25,19 @@ Route::group(['middleware' => ['json.response']], function () {
         ->name('register.api');
     Route::post('/login', 'API\AuthController@login')->name('login.api');
 
-    Route::resource('assertions', 'API\AssertionController');
-
     // private
     Route::middleware('auth:api')->group(function () {
         Route::get('/logout', 'API\AuthController@logout')->name('logout');
     });
+});
+
+// v1/xxx
+Route::group([
+    'prefix' => 'v1',
+    'middleware' => 'json.response'
+], function () {
+    // public
+    Route::resource('assertions', 'API\AssertionController', [
+        'only' => ['index', 'store', 'show', 'update', 'destroy']
+    ]);
 });
