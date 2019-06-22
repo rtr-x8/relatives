@@ -9,14 +9,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class UserTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     * A basic test example.
      *
      * @return void
      */
-    public function testExample()
+    public function testBasicTest()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $this->assertTrue(true);
     }
 }
