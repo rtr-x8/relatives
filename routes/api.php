@@ -22,10 +22,12 @@ Route::group(['middleware' => ['json.response']], function () {
     // public
     Route::post('/register', 'API\AuthController@register')
         ->name('register.api');
-    Route::post('/login', 'Api\AuthController@login')->name('login.api');
+    Route::post('/login', 'API\AuthController@login')->name('login.api');
+
+    Route::resource('assertions', 'API\AssertionController');
 
     // private
     Route::middleware('auth:api')->group(function () {
-        Route::get('/logout', 'Api\AuthController@logout')->name('logout');
+        Route::get('/logout', 'API\AuthController@logout')->name('logout');
     });
 });
