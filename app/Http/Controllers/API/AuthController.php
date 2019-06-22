@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,7 +19,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response(['errors' => $validator->errors()->all()], 422);
+            return response(['errors' => $validator->errors()], 422);
         }
 
         $request['password'] = Hash::make($request['password']);
