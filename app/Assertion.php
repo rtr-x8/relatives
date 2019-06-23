@@ -3,9 +3,21 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Scopes\AssertionScope;
 
 class Assertion extends Model
 {
+    /**
+     * モデルの「初期起動」メソッド
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new AssertionScope);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

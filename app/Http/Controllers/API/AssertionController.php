@@ -15,7 +15,7 @@ class AssertionController extends Controller
      */
     public function index()
     {
-        return Assertion::all()->chunk(30);
+        return Assertion::paginate(30);
     }
 
     /**
