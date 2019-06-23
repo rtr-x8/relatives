@@ -26,7 +26,8 @@ class AssertionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $assertion = Assertion::create($request->toArray());
+        return responce($assertion, 200);
     }
 
     /**
