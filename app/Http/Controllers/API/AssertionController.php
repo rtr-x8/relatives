@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Assertion;
 use Illuminate\Http\Request;
+use  App\Http\Requests\StoreAssertionRequest;
 use App\Http\Controllers\Controller;
 
 class AssertionController extends Controller
@@ -24,7 +25,7 @@ class AssertionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAssertionRequest $request)
     {
         $assertion = Assertion::create($request->toArray());
         return responce($assertion, 200);
