@@ -28,7 +28,7 @@ class AssertionController extends Controller
      */
     public function store(StoreAssertionRequest $request)
     {
-        $user = User::first();
+        $user = factory(User::class)->create();
         $request["user_id"] = $user->id;
         $assertion = Assertion::create($request->toArray());
         return response($assertion, 200);

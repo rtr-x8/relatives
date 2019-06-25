@@ -15,6 +15,7 @@ class AssertionTest extends TestCase
     {
         parent::setUp();
         Artisan::call('migrate:refresh');
+        factory(App\User::class, 1);
     }
 
     /**
@@ -26,5 +27,39 @@ class AssertionTest extends TestCase
     public function viewable_latest_assertions_at_index()
     {
         $this->get(route("assertions.index"))->assertStatus(200);
+    }
+
+    /**
+     * @test
+     * 正常なストア
+     *
+     * @return void
+     */
+    public function valid_store()
+    {
+        $this->post(route("assertions.store", [
+            "body" => "aaaa"
+        ]))->assertStatus(200);
+    }
+
+    /**
+     * @test
+     * 正常でないストア
+     *
+     * @return void
+     */
+    public function invalid_store()
+    {
+        $this->post(route("assertions.store", [
+            "body" => ""
+        ]))->assertStatus(422)->assertExactJson([
+            "message" => "The given data was invalid.",
+            "errors" => [
+                "body" => [
+                    "validation.required"
+                ]
+            ]
+        ]);
+
     }
 }
