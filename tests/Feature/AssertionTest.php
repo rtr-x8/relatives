@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Artisan;
+use App\User;
 
 class AssertionTest extends TestCase
 {
@@ -37,9 +38,13 @@ class AssertionTest extends TestCase
      */
     public function valid_store()
     {
+        $body = "aaaaa";
         $this->post(route("assertions.store", [
-            "body" => "aaaa"
-        ]))->assertStatus(200);
+            "body" => $body
+        ]))->assertStatus(200)->assertJson([
+            "user_id" => User::first()->id,
+            "body" => $body
+        ]);
     }
 
     /**
