@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Assertion;
+use App\User;
 use Illuminate\Http\Request;
 use  App\Http\Requests\StoreAssertionRequest;
 use App\Http\Controllers\Controller;
@@ -27,8 +28,10 @@ class AssertionController extends Controller
      */
     public function store(StoreAssertionRequest $request)
     {
+        $user = User::first();
+        $request["user_id"] = $user->id;
         $assertion = Assertion::create($request->toArray());
-        return responce($assertion, 200);
+        return response($assertion, 200);
     }
 
     /**
