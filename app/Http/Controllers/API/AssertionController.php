@@ -49,12 +49,13 @@ class AssertionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Assertion  $assertion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Assertion $assertion)
+    public function update(Request $request, $id)
     {
-        //
+        $assertion = Assertion::findOrFail($id);
+        $assertion->fill($request->all())->save();
+        return response($assertion, 200);
     }
 
     /**
