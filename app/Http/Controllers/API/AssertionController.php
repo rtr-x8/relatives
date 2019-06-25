@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Assertion;
 use App\User;
 use Illuminate\Http\Request;
-use  App\Http\Requests\StoreAssertionRequest;
+use  App\Http\Requests\AssertionRequest;
 use App\Http\Controllers\Controller;
 
 class AssertionController extends Controller
@@ -26,7 +26,7 @@ class AssertionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAssertionRequest $request)
+    public function store(AssertionRequest $request)
     {
         $user = factory(User::class)->create();
         $request["user_id"] = $user->id;
