@@ -51,7 +51,7 @@ class AssertionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AssertionRequest $request, $id)
     {
         $assertion = Assertion::findOrFail($id);
         $assertion->fill($request->all())->save();
