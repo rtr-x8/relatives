@@ -132,8 +132,10 @@ class AssertionTest extends TestCase
     public function delete_assertion()
     {
         $assertion = Assertion::first();
+        $count = Assertion::count();
         $this->delete(route("assertions.destroy", $assertion->id))
             ->assertStatus(204);
+        $this->assertEquals($count - 1, Assertion::count());
     }
 
     /**
