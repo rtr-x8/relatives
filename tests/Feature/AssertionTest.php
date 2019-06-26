@@ -82,4 +82,44 @@ class AssertionTest extends TestCase
             "body" => "asdfdd"
         ])->assertStatus(200);
     }
+
+    /**
+     * @test
+     * 正常でないupdate 1
+     *
+     * @return void
+     */
+    public function invalid_update_without_body()
+    {
+        $assertion = Assertion::first();
+        $this->put(route("assertions.update", $assertion->id), [
+            "body" => ""
+        ])->assertStatus(422)->assertExactJson([
+            "message" => "The given data was invalid.",
+            "errors" => [
+                "body" => [
+                    "validation.required"
+                ]
+            ]
+        ]);
+    }
+
+    /**
+     * @test
+     * 正常でないupdate 2
+     *
+     * //TODO もう少し詳しく
+     *
+     * @return void
+     */
+    public function invalid_update_wthout_assertion()
+    {
+        $this->put(route("assertions.update", 99999), [
+            "body" => "adadsadsa"
+        ])->assertStatus(404);
+
+        $this->put(route("assertions.update", 99999), [
+            "body" => ""
+        ])->assertStatus(422);
+    }
 }
