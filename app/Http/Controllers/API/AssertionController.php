@@ -61,11 +61,12 @@ class AssertionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Assertion  $assertion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Assertion $assertion)
+    public function destroy($id)
     {
-        //
+        $assertion = Assertion::findOrFail($id);
+        $assertion->delete();
+        return response(null, 204);
     }
 }
