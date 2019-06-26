@@ -122,4 +122,17 @@ class AssertionTest extends TestCase
             "body" => ""
         ])->assertStatus(422);
     }
+
+    /**
+     * @test
+     * 正常な削除
+     *
+     * @return void
+     */
+    public function delete_assertion()
+    {
+        $assertion = Assertion::first();
+        $this->delete(route("assertions.destroy", $assertion->id))
+            ->assertStatus(204);
+    }
 }
