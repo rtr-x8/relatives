@@ -24,7 +24,8 @@ class AssertionRequest extends FormRequest
     public function rules()
     {
         return [
-            "body" => "required",
+            //"body" => "required",
+            "title" => "required"
         ];
     }
 }
