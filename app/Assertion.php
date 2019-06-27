@@ -24,7 +24,7 @@ class Assertion extends Model
      * @var array
      */
     protected $fillable = [
-        'body', 'provider', 'user_id',
+        'title', 'body', 'provider', 'user_id',
     ];
 
     /**
