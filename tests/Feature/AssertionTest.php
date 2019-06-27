@@ -69,8 +69,28 @@ class AssertionTest extends TestCase
                 ]
             ]
         ]);
-
     }
+
+    /**
+     * @test
+     * 正常でないストア02 title is so longer
+     *
+     * @return void
+     */
+    public function invalid_store_lobger_title()
+    {
+        $this->post(route("assertions.store", [
+            "title" => str_repeat("a", 3001)
+        ]))->assertStatus(422)->assertExactJson([
+            "message" => "The given data was invalid.",
+            "errors" => [
+                "title" => [
+                    "validation.max.string"
+                ]
+            ]
+        ]);
+    }
+
 
     /**
      * @test

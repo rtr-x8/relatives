@@ -7,6 +7,11 @@ use Illuminate\Foundation\Http\FormRequest;
 class AssertionRequest extends FormRequest
 {
     /**
+     * Settings
+     */
+    private $titleMax = 3000;
+
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -25,7 +30,8 @@ class AssertionRequest extends FormRequest
     {
         return [
             //"body" => "required",
-            "title" => "required"
+            "title" => "required|max:{$this->titleMax}"
         ];
     }
+
 }
