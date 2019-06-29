@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Scopes\AssertionScope;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Assertion extends Model
 {
+    use SoftDeletes;
+
     /**
      * モデルの「初期起動」メソッド
      *

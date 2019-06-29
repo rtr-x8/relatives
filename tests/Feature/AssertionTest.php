@@ -164,6 +164,9 @@ class AssertionTest extends TestCase
         $this->delete(route("assertions.destroy", $assertion->id))
             ->assertStatus(204);
         $this->assertEquals($count - 1, Assertion::count());
+        $this->assertSoftDeleted('assertions', [
+            'id' => $assertion->id,
+        ]);
     }
 
     /**
