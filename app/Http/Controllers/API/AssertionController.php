@@ -42,7 +42,7 @@ class AssertionController extends Controller
      */
     public function show(Assertion $assertion)
     {
-        //
+        return response($assertion, 200);
     }
 
     /**
