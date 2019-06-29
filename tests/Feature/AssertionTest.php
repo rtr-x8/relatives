@@ -40,10 +40,13 @@ class AssertionTest extends TestCase
      */
     public function valid_store()
     {
+        $title = "title";
         $body = "aaaaa";
         $this->post(route("assertions.store", [
+            "title" => $title,
             "body" => $body
         ]))->assertStatus(200)->assertJson([
+            "title" => $title,
             "body" => $body
         ]);
     }
@@ -54,20 +57,40 @@ class AssertionTest extends TestCase
      *
      * @return void
      */
-    public function invalid_store()
+    public function invalid_store_without_title()
     {
         $this->post(route("assertions.store", [
-            "body" => ""
+            "title" => ""
         ]))->assertStatus(422)->assertExactJson([
             "message" => "The given data was invalid.",
             "errors" => [
-                "body" => [
+                "title" => [
                     "validation.required"
                 ]
             ]
         ]);
-
     }
+
+    /**
+     * @test
+     * 正常でないストア02 title is so longer
+     *
+     * @return void
+     */
+    public function invalid_store_lobger_title()
+    {
+        $this->post(route("assertions.store", [
+            "title" => str_repeat("a", 3001)
+        ]))->assertStatus(422)->assertExactJson([
+            "message" => "The given data was invalid.",
+            "errors" => [
+                "title" => [
+                    "validation.max.string"
+                ]
+            ]
+        ]);
+    }
+
 
     /**
      * @test
@@ -79,6 +102,7 @@ class AssertionTest extends TestCase
     {
         $assertion = Assertion::first();
         $this->put(route("assertions.update", $assertion->id), [
+            "title" => $assertion->title . "update",
             "body" => "asdfdd"
         ])->assertStatus(200);
     }
@@ -93,11 +117,11 @@ class AssertionTest extends TestCase
     {
         $assertion = Assertion::first();
         $this->put(route("assertions.update", $assertion->id), [
-            "body" => ""
+            "title" => ""
         ])->assertStatus(422)->assertExactJson([
             "message" => "The given data was invalid.",
             "errors" => [
-                "body" => [
+                "title" => [
                     "validation.required"
                 ]
             ]
@@ -114,12 +138,16 @@ class AssertionTest extends TestCase
      */
     public function invalid_update_wthout_assertion()
     {
+        // ないとき
         $this->put(route("assertions.update", 99999), [
+            "title" => "tstset",
             "body" => "adadsadsa"
         ])->assertStatus(404);
 
+        // 必要な情報がない
         $this->put(route("assertions.update", 99999), [
-            "body" => ""
+            "body" => "adadsadsa",
+            "title" => "",
         ])->assertStatus(422);
     }
 
@@ -136,11 +164,14 @@ class AssertionTest extends TestCase
         $this->delete(route("assertions.destroy", $assertion->id))
             ->assertStatus(204);
         $this->assertEquals($count - 1, Assertion::count());
+        $this->assertSoftDeleted('assertions', [
+            'id' => $assertion->id,
+        ]);
     }
 
     /**
      * @test
-     * 正常でない削除
+     * 正常でない削除 ない時
      *
      * @return void
      */

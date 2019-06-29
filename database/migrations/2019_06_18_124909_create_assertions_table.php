@@ -15,14 +15,17 @@ class CreateAssertionsTable extends Migration
     {
         Schema::create('assertions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
 
-            $table->longText('body');
+            $table->text('title');
+            $table->longText('body')->nullable();
             $table->text('provider')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
+
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 
