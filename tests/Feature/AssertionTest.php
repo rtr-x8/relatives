@@ -182,4 +182,35 @@ class AssertionTest extends TestCase
         $this->delete(route("assertions.destroy", $id))
             ->assertStatus(404);
     }
+
+    /**
+     * @test
+     * 表示
+     *
+     * @return void
+     */
+    public function show_assertion()
+    {
+        $assertion = Assertion::first();
+        $this->get(route('assertions.show', $assertion->id))
+            ->assertStatus(200)
+            ->assertJson([
+                "title" => $assertion->title,
+                "body" => $assertion->body
+            ]);
+    }
+
+    /**
+     * @test
+     * 表示 404
+     *
+     * @return void
+     */
+    public function show_assertion_but_404()
+    {
+        $assertion = Assertion::latest()->first();
+        $id = $assertion->id + 10;
+        $this->get(route('assertions.show', $id))
+            ->assertStatus(404);
+    }
 }
